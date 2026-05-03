@@ -1,5 +1,19 @@
 {
   "dependencies": {
     "express": "^5.2.1"
-  }
+  },
+  "name": "webserver",
+  "version": "1.0.0",
+  "description": "Quanlyveso",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "secret"
+  ],
+  "author": "QuangTuanTrung",
+  "license": "ISC"
 }
