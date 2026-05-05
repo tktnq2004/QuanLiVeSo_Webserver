@@ -1,14 +1,22 @@
-import express from 'express';
+const express = require('express');
+const { connectDB, sql } = require('./config/db');
 
-// const express = require('express');
 const app = express();
 
 const PORT = 3000;
-
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
+connectDB();
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
+
+
+});
+
+app.get('/', async (req, res) => {
+    try {
+        const result = await sql.query`SELECT * FROM NHAP_XUAT`;
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 });
