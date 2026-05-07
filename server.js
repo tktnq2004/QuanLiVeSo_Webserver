@@ -1,9 +1,25 @@
 const express = require('express');
 const { connectDB, sql } = require('./config/db');
-
+const companyRoute = require('./routes/company.route');
+const groupRoute = require('./routes/group.route');
+const jobRoute = require('./routes/job.route');
+const customerRoute = require('./routes/customer.route');
+const employeeRoute = require('./routes/employee.route');
+const productRoute = require('./routes/product.route');
+const nhapXuatRoute = require('./routes/nhap_xuat.route');
 const app = express();
 
+app.use(express.json());
+app.use('/api/company', companyRoute);
+app.use('/api/group', groupRoute);
+app.use('/api/job', jobRoute);
+app.use('/api/customer', customerRoute);
+app.use('/api/employee', employeeRoute);
+app.use('/api/product', productRoute);
+app.use('/api/nhap-xuat', nhapXuatRoute);
+
 const PORT = 3000;
+
 connectDB();
 
 app.listen(PORT, () => {
@@ -20,3 +36,4 @@ app.get('/', async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+

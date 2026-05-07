@@ -12,7 +12,6 @@ const config = {
         trustedConnection: false,
         enableArithAbort: true,
     },
-    port: 1433,
 };
 
 const connectDB = async () => {
