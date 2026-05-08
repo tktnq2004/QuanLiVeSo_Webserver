@@ -3,7 +3,6 @@ const model = require('../models/employee.model');
 
 const create = async (data) => {
 
-    // check nghề tồn tại
     const check = await sql.query`
         SELECT 1 FROM MA_NGHE WHERE MA_NGHE = ${data.MA_NGHE}
     `;

@@ -1,4 +1,4 @@
-const service = require('../services/nhapxuat.service');
+const service = require('../services/nhap_xuat.service');
 
 const create = async (req, res) => {
     try {

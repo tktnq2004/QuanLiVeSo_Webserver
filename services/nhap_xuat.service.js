@@ -1,5 +1,5 @@
 const { sql } = require('../config/db');
-const model = require('../models/nhapxuat.model');
+const model = require('../models/nhap_xuat.model');
 
 const create = async (data) => {
 

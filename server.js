@@ -8,7 +8,9 @@ const employeeRoute = require('./routes/employee.route');
 const productRoute = require('./routes/product.route');
 const nhapXuatRoute = require('./routes/nhap_xuat.route');
 const app = express();
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 app.use('/api/company', companyRoute);
 app.use('/api/group', groupRoute);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/nhapxuat.controller');
+const controller = require('../controllers/nhap_xuat.controller');
 
 router.get('/', controller.getAll);
 router.post('/', controller.create);
