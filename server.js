@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const { connectDB, sql } = require('./config/db');
 
 const app = express();
@@ -15,6 +15,15 @@ app.listen(PORT, () => {
 app.get('/', async (req, res) => {
     try {
         const result = await sql.query`SELECT * FROM NHAP_XUAT`;
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+app.get('/api/khachhang', async (req, res) => {
+    try {
+        const result = await sql.query`SELECT * FROM MA_KHACH_HANG`;
         res.json(result.recordset);
     } catch (err) {
         res.status(500).send(err.message);
