@@ -47,12 +47,10 @@ const createTransaction = async (data) => {
     }
 };
 
-
 const getDetail = async (id) => {
     const request = new sql.Request();
     request.input('id', sql.BigInt, id);
 
-    
     const phieuResult = await request.query`
         SELECT P.*, DT.TenDoiTac, HT.TenHT
         FROM Phieu P
@@ -106,5 +104,3 @@ module.exports = {
     getDetail,
     huyPhieu
 };
-
-module.exports = { createTransaction };

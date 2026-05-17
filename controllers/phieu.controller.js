@@ -1,5 +1,6 @@
 const service = require('../services/phieu.service');
 
+
 const createTransaction = async (req, res) => {
     try {
         const result = await service.createTransaction(req.body);
@@ -10,6 +11,7 @@ const createTransaction = async (req, res) => {
     }
 };
 
+
 const getDetail = async (req, res) => {
     try {
         const data = await service.getDetail(req.params.id);
@@ -19,6 +21,7 @@ const getDetail = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
 
 const huyPhieu = async (req, res) => {
     try {
@@ -34,5 +37,3 @@ module.exports = {
     getDetail,
     huyPhieu
 };
-
-module.exports = { createTransaction };
