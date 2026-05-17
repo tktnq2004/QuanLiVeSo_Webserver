@@ -1,34 +1,49 @@
 const service = require('../services/company.service');
 
 const getAll = async (req, res) => {
-    const data = await service.getAll();
-    res.json(data);
+    try {
+        const data = await service.getAll();
+        res.json(data);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 };
 
 const getById = async (req, res) => {
-    const data = await service.getById(req.params.id);
-    res.json(data);
+    try {
+        const data = await service.getById(req.params.id);
+        if (!data) return res.status(404).send('Không tìm thấy công ty xổ số');
+        res.json(data);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 };
 
 const create = async (req, res) => {
-    await service.create(req.body);
-    res.send('Created');
+    try {
+        await service.create(req.body);
+        res.status(201).send('Created');
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 };
 
 const update = async (req, res) => {
-    await service.update(req.params.id, req.body);
-    res.send('Updated');
+    try {
+        await service.update(req.params.id, req.body);
+        res.send('Updated');
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 };
 
 const remove = async (req, res) => {
-    await service.remove(req.params.id);
-    res.send('Deleted');
+    try {
+        await service.remove(req.params.id);
+        res.send('Deleted');
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 };
 
-module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    remove
-};
+module.exports = { getAll, getById, create, update, remove };

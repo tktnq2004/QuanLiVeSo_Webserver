@@ -6,10 +6,4 @@ const create = (data) => model.create(data);
 const update = (id, data) => model.update(id, data);
 const remove = (id) => model.remove(id);
 
-module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    remove
-};
+module.exports = { getAll, getById, create, update, remove };
