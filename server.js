@@ -6,9 +6,11 @@ const jobRoute = require('./routes/job.route');
 const doitacRoute = require('./routes/doitac.route');
 const employeeRoute = require('./routes/employee.route');
 const productRoute = require('./routes/product.route');
+const hinhThucThanhToanRoute = require('./routes/hinhthucthanhtoan.route');
 const nhapXuatRoute = require('./routes/nhap_xuat.route');
 const app = express();
 const cors = require('cors');
+
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +21,7 @@ app.use('/api/doitac', doitacRoute);
 app.use('/api/employee', employeeRoute);
 app.use('/api/product', productRoute);
 app.use('/api/nhap-xuat', nhapXuatRoute);
+app.use('/api/hinhthucthanhtoan', hinhThucThanhToanRoute);
 
 const PORT = 3000;
 
