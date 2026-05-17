@@ -11,6 +11,7 @@ const hinhThucThanhToanRoute = require('./routes/hinhthucthanhtoan.route');
 const dotPhatHanhRoute = require('./routes/dotphathanh.route');
 const capVeRoute = require('./routes/capve.route');
 const phieuRoute = require('./routes/phieu.route');
+const socaiRoute = require('./routes/socai.route');
 
 const app = express();
 const cors = require('cors');
@@ -29,6 +30,7 @@ app.use('/api/hinhthucthanhtoan', hinhThucThanhToanRoute);
 app.use('/api/dotphathanh', dotPhatHanhRoute);
 app.use('/api/capve', capVeRoute);
 app.use('/api/phieu', phieuRoute);
+app.use('/api/socai', socaiRoute);
 
 const PORT = 3000;
 
