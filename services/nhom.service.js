@@ -1,4 +1,4 @@
-const model = require('../models/group.model');
+const model = require('../models/nhom.model');
 
 const getAll = () => model.getAll();
 const getById = (id) => model.getById(id);
