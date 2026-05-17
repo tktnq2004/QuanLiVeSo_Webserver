@@ -1,4 +1,4 @@
-const service = require('../services/company.service');
+const service = require('../services/congtyxoso.service');
 
 const getAll = async (req, res) => {
     try {
