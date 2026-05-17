@@ -1,24 +1,28 @@
-const express = require('express');
+﻿const express = require('express');
 const { connectDB, sql } = require('./config/db');
-const companyRoute = require('./routes/company.route');
-const groupRoute = require('./routes/group.route');
-const jobRoute = require('./routes/job.route');
-const customerRoute = require('./routes/customer.route');
-const employeeRoute = require('./routes/employee.route');
-const productRoute = require('./routes/product.route');
-const nhapXuatRoute = require('./routes/nhap_xuat.route');
+const congtysoxoRoute = require('./routes/congtyxoso.route');
+const nhomRoute = require('./routes/nhom.route');
+const doitacRoute = require('./routes/doitac.route');
+const hinhThucThanhToanRoute = require('./routes/hinhthucthanhtoan.route');
+const dotPhatHanhRoute = require('./routes/dotphathanh.route');
+const capVeRoute = require('./routes/capve.route');
+const phieuRoute = require('./routes/phieu.route');
+const socaiRoute = require('./routes/socai.route');
+
 const app = express();
 const cors = require('cors');
 
+
 app.use(cors());
 app.use(express.json());
-app.use('/api/company', companyRoute);
-app.use('/api/group', groupRoute);
-app.use('/api/job', jobRoute);
-app.use('/api/customer', customerRoute);
-app.use('/api/employee', employeeRoute);
-app.use('/api/product', productRoute);
-app.use('/api/nhap-xuat', nhapXuatRoute);
+app.use('/api/congtysoxo', congtysoxoRoute);
+app.use('/api/nhom', nhomRoute);
+app.use('/api/doitac', doitacRoute);
+app.use('/api/hinhthucthanhtoan', hinhThucThanhToanRoute);
+app.use('/api/dotphathanh', dotPhatHanhRoute);
+app.use('/api/capve', capVeRoute);
+app.use('/api/phieu', phieuRoute);
+app.use('/api/socai', socaiRoute);
 
 const PORT = 3000;
 
@@ -29,13 +33,3 @@ app.listen(PORT, () => {
 
 
 });
-
-app.get('/', async (req, res) => {
-    try {
-        const result = await sql.query`SELECT * FROM NHAP_XUAT`;
-        res.json(result.recordset);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-

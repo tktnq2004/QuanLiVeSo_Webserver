@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/nhap_xuat.controller');
+const controller = require('../controllers/hinhthucthanhtoan.controller');
 
 router.get('/', controller.getAll);
-router.post('/', controller.create);
 
 module.exports = router;

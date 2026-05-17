@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/job.controller');
+const controller = require('../controllers/congtyxoso.controller');
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);

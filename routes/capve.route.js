@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/customer.controller');
+const controller = require('../controllers/capve.controller');
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);

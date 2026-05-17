@@ -2,44 +2,41 @@ const { sql } = require('../config/db');
 
 // GET ALL
 const getAll = async () => {
-    const result = await sql.query`SELECT * FROM MA_NGHE`;
+    const result = await sql.query`SELECT * FROM Nhom`;
     return result.recordset;
 };
 
 // GET BY ID
 const getById = async (id) => {
     const result = await sql.query`
-        SELECT * FROM MA_NGHE WHERE MA_NGHE = ${id}
+        SELECT * FROM Nhom WHERE MaNhom = ${id}
     `;
     return result.recordset[0];
 };
 
 // CREATE
 const create = async (data) => {
-    const { STT, MA_NGHE, TEN_NGHE } = data;
-
+    const { MaNhom, TenNhom } = data;
     await sql.query`
-        INSERT INTO MA_NGHE (STT, MA_NGHE, TEN_NGHE)
-        VALUES (${STT}, ${MA_NGHE}, ${TEN_NGHE})
+        INSERT INTO Nhom (MaNhom, TenNhom)
+        VALUES (${MaNhom}, ${TenNhom})
     `;
 };
 
 // UPDATE
 const update = async (id, data) => {
-    const { STT, TEN_NGHE } = data;
-
+    const { TenNhom } = data;
     await sql.query`
-        UPDATE MA_NGHE
-        SET STT = ${STT},
-            TEN_NGHE = ${TEN_NGHE}
-        WHERE MA_NGHE = ${id}
+        UPDATE Nhom
+        SET TenNhom = ${TenNhom}
+        WHERE MaNhom = ${id}
     `;
 };
 
 // DELETE
 const remove = async (id) => {
     await sql.query`
-        DELETE FROM MA_NGHE WHERE MA_NGHE = ${id}
+        DELETE FROM Nhom WHERE MaNhom = ${id}
     `;
 };
 
