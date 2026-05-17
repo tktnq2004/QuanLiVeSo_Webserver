@@ -1,7 +1,7 @@
 ﻿const express = require('express');
 const { connectDB, sql } = require('./config/db');
-const companyRoute = require('./routes/company.route');
-const groupRoute = require('./routes/group.route');
+const congtysoxoRoute = require('./routes/company.route');
+const nhomRoute = require('./routes/group.route');
 //const jobRoute = require('./routes/job.route');
 const doitacRoute = require('./routes/doitac.route');
 //const employeeRoute = require('./routes/employee.route');
@@ -19,8 +19,8 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
-app.use('/api/company', companyRoute);
-app.use('/api/group', groupRoute);
+app.use('/api/company', congtysoxoRoute);
+app.use('/api/group', nhomRoute);
 //app.use('/api/job', jobRoute);
 app.use('/api/doitac', doitacRoute);
 //app.use('/api/employee', employeeRoute);

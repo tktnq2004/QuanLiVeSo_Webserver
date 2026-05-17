@@ -1,4 +1,4 @@
-const service = require('../services/group.service');
+const service = require('../services/nhom.service');
 
 const getAll = async (req, res) => {
     try {
@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
     try {
         const data = await service.getById(req.params.id);
-        if (!data) return res.status(404).send('Không tìm thấy nhóm đối tác');
+        if (!data) return res.status(404).send('Không tìm thấy nhóm');
         res.json(data);
     } catch (err) {
         res.status(500).send(err.message);
