@@ -1,5 +1,8 @@
-const model = require('../models/phieu.model');
+const getDetail = (id) => model.getDetail(id);
+const huyPhieu = (id) => model.huyPhieu(id);
 
-const createTransaction = (data) => model.createTransaction(data);
-
-module.exports = { createTransaction };
+module.exports = {
+    createTransaction,
+    getDetail,
+    huyPhieu
+};
