@@ -8,6 +8,9 @@ const employeeRoute = require('./routes/employee.route');
 const productRoute = require('./routes/product.route');
 const hinhThucThanhToanRoute = require('./routes/hinhthucthanhtoan.route');
 const nhapXuatRoute = require('./routes/nhap_xuat.route');
+const dotPhatHanhRoute = require('./routes/dotphathanh.route');
+const capVeRoute = require('./routes/capve.route');
+
 const app = express();
 const cors = require('cors');
 
@@ -22,6 +25,8 @@ app.use('/api/employee', employeeRoute);
 app.use('/api/product', productRoute);
 app.use('/api/nhap-xuat', nhapXuatRoute);
 app.use('/api/hinhthucthanhtoan', hinhThucThanhToanRoute);
+app.use('/api/dotphathanh', dotPhatHanhRoute);
+app.use('/api/capve', capVeRoute);
 
 const PORT = 3000;
 
