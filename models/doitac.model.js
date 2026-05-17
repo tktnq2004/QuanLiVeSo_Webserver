@@ -70,10 +70,29 @@ const remove = async (id) => {
     `;
 };
 
+//CALCULATE CONG NO
+const getCongNo = async (id) => {
+    const result = await sql.query`
+        SELECT 
+            DT.MaDoiTac, 
+            DT.TenDoiTac, 
+            DT.NoDauKy AS NoCu,
+            ISNULL(SUM(SC.ThanhTien), 0) AS TongPhatSinh,
+            ISNULL(SUM(SC.TienTra), 0) AS TongDaTra,
+            (DT.NoDauKy + ISNULL(SUM(SC.ThanhTien), 0) - ISNULL(SUM(SC.TienTra), 0)) AS ConNoHienTai
+        FROM DoiTac DT
+        LEFT JOIN SoCai SC ON DT.MaDoiTac = SC.MaDoiTac
+        WHERE DT.MaDoiTac = ${id}
+        GROUP BY DT.MaDoiTac, DT.TenDoiTac, DT.NoDauKy
+    `;
+    return result.recordset[0];
+};
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
-    remove
+    remove,
+    getCongNo
 };

@@ -25,10 +25,23 @@ const remove = async (req, res) => {
     res.send('Deleted');
 };
 
+const getCongNo = async (req, res) => {
+    try {
+        const data = await service.getCongNo(req.params.id);
+        if (!data) {
+            return res.status(404).send('Không tìm thấy đối tác');
+        }
+        res.json(data);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
-    remove
+    remove,
+    getCongNo
 };
