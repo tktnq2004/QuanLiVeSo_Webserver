@@ -2,44 +2,42 @@ const { sql } = require('../config/db');
 
 // GET ALL
 const getAll = async () => {
-    const result = await sql.query`SELECT * FROM MA_CTY`;
+    const result = await sql.query`SELECT * FROM CongTyXoSo`;
     return result.recordset;
 };
 
 // GET BY ID
 const getById = async (id) => {
     const result = await sql.query`
-        SELECT * FROM MA_CTY WHERE MA_CTY = ${id}
+        SELECT * FROM CongTyXoSo WHERE MaCTXS = ${id}
     `;
     return result.recordset[0];
 };
 
 // CREATE
 const create = async (data) => {
-    const { MA_CTY, TEN_CTY, MA_THU_TU } = data;
-
+    const { MaCTXS, TenCTXS, Dung } = data;
     await sql.query`
-        INSERT INTO MA_CTY (MA_CTY, TEN_CTY, MA_THU_TU)
-        VALUES (${MA_CTY}, ${TEN_CTY}, ${MA_THU_TU})
+        INSERT INTO CongTyXoSo (MaCTXS, TenCTXS, Dung)
+        VALUES (${MaCTXS}, ${TenCTXS}, ${Dung})
     `;
 };
 
 // UPDATE
 const update = async (id, data) => {
-    const { TEN_CTY, MA_THU_TU } = data;
-
+    const { TenCTXS, Dung } = data;
     await sql.query`
-        UPDATE MA_CTY
-        SET TEN_CTY = ${TEN_CTY},
-            MA_THU_TU = ${MA_THU_TU}
-        WHERE MA_CTY = ${id}
+        UPDATE CongTyXoSo
+        SET TenCTXS = ${TenCTXS},
+            Dung = ${Dung}
+        WHERE MaCTXS = ${id}
     `;
 };
 
 // DELETE
 const remove = async (id) => {
     await sql.query`
-        DELETE FROM MA_CTY WHERE MA_CTY = ${id}
+        DELETE FROM CongTyXoSo WHERE MaCTXS = ${id}
     `;
 };
 
