@@ -3,7 +3,7 @@ const { sql } = require('../config/db');
 const createTransaction = async (data) => {
     const {
         NgayGiao, MaDoiTac, Loai, LoaiChiTiet,
-        SoCT, MaHT, GhiChu, ChiTietSoCai
+        SoCT, MaHT, GhiChu, ChiTietSoCai, UserTao 
     } = data;
 
     const transaction = new sql.Transaction();
@@ -12,10 +12,11 @@ const createTransaction = async (data) => {
     try {
         const request = new sql.Request(transaction);
 
+
         const phieuResult = await request.query`
-            INSERT INTO Phieu (NgayGiao, MaDoiTac, Loai, LoaiChiTiet, SoCT, MaHT, GhiChu)
+            INSERT INTO Phieu (NgayGiao, MaDoiTac, Loai, LoaiChiTiet, SoCT, MaHT, GhiChu, UserTao)
             OUTPUT INSERTED.ID
-            VALUES (${NgayGiao}, ${MaDoiTac}, ${Loai}, ${LoaiChiTiet}, ${SoCT}, ${MaHT}, ${GhiChu})
+            VALUES (${NgayGiao}, ${MaDoiTac}, ${Loai}, ${LoaiChiTiet}, ${SoCT}, ${MaHT}, ${GhiChu}, ${UserTao})
         `;
 
         const idPhieu = phieuResult.recordset[0].ID;
@@ -23,16 +24,17 @@ const createTransaction = async (data) => {
         if (ChiTietSoCai && ChiTietSoCai.length > 0) {
             for (const item of ChiTietSoCai) {
                 const detailRequest = new sql.Request(transaction);
+
                 await detailRequest.query`
                     INSERT INTO SoCai (
                         IDPhieu, NgayGiao, MaDot, MaDoiTac, Loai, LoaiChiTiet, 
                         SoLuong, DonGia, TienTra, TyLeThanhToan, ThanhTien, 
-                        SoCT, MaHT, GhiChu
+                        SoCT, MaHT, GhiChu, UserTao
                     )
                     VALUES (
                         ${idPhieu}, ${NgayGiao}, ${item.MaDot}, ${MaDoiTac}, ${item.Loai || Loai}, ${item.LoaiChiTiet || LoaiChiTiet}, 
                         ${item.SoLuong || 0}, ${item.DonGia || 0}, ${item.TienTra || 0}, ${item.TyLeThanhToan || 1}, ${item.ThanhTien || 0}, 
-                        ${SoCT}, ${MaHT}, ${item.GhiChu}
+                        ${SoCT}, ${MaHT}, ${item.GhiChu}, ${UserTao}
                     )
                 `;
             }
