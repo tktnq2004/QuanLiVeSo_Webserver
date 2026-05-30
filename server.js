@@ -15,7 +15,7 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
-app.use('/api/congtysoxo', congtysoxoRoute);
+app.use('/api/congtyxoso', congtysoxoRoute);
 app.use('/api/nhom', nhomRoute);
 app.use('/api/doitac', doitacRoute);
 app.use('/api/hinhthucthanhtoan', hinhThucThanhToanRoute);
@@ -30,6 +30,5 @@ connectDB();
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
-
 
 });

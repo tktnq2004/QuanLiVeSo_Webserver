@@ -1,16 +1,15 @@
 const model = require('../models/phieu.model');
 
+const getAll = () => model.getAll();
 
-const createTransaction = (data) => model.createTransaction(data);
+const getById = (id) => model.getById(id);
 
+const create = (data) => model.create(data);
 
-const getDetail = (id) => model.getDetail(id);
-
-
-const huyPhieu = (id) => model.huyPhieu(id);
+const remove = (id) => model.huyPhieu(id);
 
 module.exports = {
-    createTransaction,
-    getDetail,
-    huyPhieu
+    create,
+    getById,
+    remove
 };

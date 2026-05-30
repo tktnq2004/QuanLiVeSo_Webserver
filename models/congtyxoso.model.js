@@ -1,43 +1,75 @@
 const { sql } = require('../config/db');
 
-// GET ALL
 const getAll = async () => {
-    const result = await sql.query`SELECT * FROM CongTyXoSo`;
+
+    const result = await sql.query(`
+        SELECT
+            MaCTXS,
+            TenCTXS,
+            Dung
+        FROM CongTyXoSo
+        ORDER BY MaCTXS
+    `);
+
     return result.recordset;
 };
 
-// GET BY ID
 const getById = async (id) => {
+
     const result = await sql.query`
-        SELECT * FROM CongTyXoSo WHERE MaCTXS = ${id}
+        SELECT
+            MaCTXS,
+            TenCTXS,
+            Dung
+        FROM CongTyXoSo
+        WHERE MaCTXS = ${id}
     `;
+
     return result.recordset[0];
 };
 
-// CREATE
 const create = async (data) => {
-    const { MaCTXS, TenCTXS, Dung } = data;
+
+    const MaCTXS = data.MaCTXS?.trim();
+    const TenCTXS = data.TenCTXS?.trim();
+    const Dung = data.Dung ?? 0;
+
     await sql.query`
-        INSERT INTO CongTyXoSo (MaCTXS, TenCTXS, Dung)
-        VALUES (${MaCTXS}, ${TenCTXS}, ${Dung})
+        INSERT INTO CongTyXoSo
+        (
+            MaCTXS,
+            TenCTXS,
+            Dung
+        )
+        VALUES
+        (
+            ${MaCTXS},
+            ${TenCTXS},
+            ${Dung}
+        )
     `;
 };
 
-// UPDATE
 const update = async (id, data) => {
-    const { TenCTXS, Dung } = data;
+
+    const TenCTXS = data.TenCTXS?.trim();
+    const Dung = data.Dung ?? 0;
+
     await sql.query`
         UPDATE CongTyXoSo
-        SET TenCTXS = ${TenCTXS},
+        SET
+            TenCTXS = ${TenCTXS},
             Dung = ${Dung}
         WHERE MaCTXS = ${id}
     `;
 };
 
-// DELETE
 const remove = async (id) => {
+
+    // hard delete
     await sql.query`
-        DELETE FROM CongTyXoSo WHERE MaCTXS = ${id}
+        DELETE FROM CongTyXoSo
+        WHERE MaCTXS = ${id}
     `;
 };
 

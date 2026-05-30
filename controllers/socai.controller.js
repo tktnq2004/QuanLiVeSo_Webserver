@@ -1,16 +1,42 @@
-const service = require('../services/socai.service');
+const model = require('../models/socai.model');
 
 const getBaoCao = async (req, res) => {
-    try {
-        const { madoitac } = req.params;
-        const { tuNgay, denNgay } = req.query;
 
-        const data = await service.getBaoCaoByDoiTac(madoitac, tuNgay, denNgay);
+    try {
+
+        const { maDoiTac } = req.params;
+
+        const {
+            tuNgay,
+            denNgay
+        } = req.query;
+
+        if (!maDoiTac) {
+
+            return res.status(400).json({
+                message: 'Thiếu mã đối tác'
+            });
+        }
+
+        const data =
+            await model.getBaoCaoByDoiTac({
+                maDoiTac,
+                tuNgay,
+                denNgay
+            });
+
         res.json(data);
+
     } catch (error) {
-        console.error("Lỗi lấy báo cáo sổ cái:", error);
-        res.status(500).send(error.message);
+
+        console.log(error);
+
+        res.status(500).json({
+            message: error.message
+        });
     }
 };
 
-module.exports = { getBaoCao };
+module.exports = {
+    getBaoCao
+};
