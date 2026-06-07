@@ -19,7 +19,7 @@ const createPhieu = async (req, res) => {
 
         const isVe = [
             model.LOAI.NHAP_VE, model.LOAI.BAN_VE,
-            model.LOAI.TRA_VE,  model.LOAI.THU_VE,
+            model.LOAI.TRA_VE, model.LOAI.THU_VE,
         ].includes(loaiSo);
 
         if (isVe && !MaDot) {
@@ -31,17 +31,17 @@ const createPhieu = async (req, res) => {
         const result = await model.createPhieu({
             NgayGiao,
             MaDoiTac,
-            Loai:          loaiSo,
-            MaDot:         MaDot         ?? null,
-            SoLuong:       SoLuong       ?? 0,
-            VeE:           VeE           ?? 0,
-            DonGia:        DonGia        ?? 0,
+            Loai: loaiSo,
+            MaDot: MaDot ?? null,
+            SoLuong: SoLuong ?? 0,
+            VeE: VeE ?? 0,
+            DonGia: DonGia ?? 0,
             TyLeThanhToan: TyLeThanhToan ?? 1,
-            TienTra:       TienTra       ?? 0,
-            MaHT:          MaHT          ?? null,
-            SoCT:          SoCT          ?? null,
-            GhiChu:        GhiChu        ?? null,
-            UserTao:       req.user?.username ?? null,
+            TienTra: TienTra ?? 0,
+            MaHT: MaHT ?? null,
+            SoCT: SoCT ?? null,
+            GhiChu: GhiChu ?? null,
+            UserTao: req.user?.username ?? null,
         });
 
         res.status(201).json({ message: 'Created', IDPhieu: result.IDPhieu });
@@ -112,6 +112,69 @@ const getThongKe = async (req, res) => {
     }
 };
 
+const getLoiNhuan = async (req, res) => {
+    try {
+        const { tuNgay, denNgay } = req.query;
+        const data = await model.getLoiNhuan({ tuNgay, denNgay });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getAll = async (req, res) => {
+    try {
+        const data = await model.getAll();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+const getCongNo = async (req, res) => {
+    try {
+        const { tuNgay, denNgay, phanLoai, tinhTheo } = req.query;
+
+        if (!tuNgay || !denNgay) {
+            return res.status(400).json({
+                message: 'Thiếu tuNgay hoặc denNgay'
+            });
+        }
+
+        const data = await model.getCongNo({
+            tuNgay,
+            denNgay,
+            phanLoai: phanLoai || 'tatCa',
+            tinhTheo: tinhTheo || 'ngayGiao',
+        });
+
+        res.json(data);
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+const getChiTietCongNo = async (req, res) => {
+    try {
+        const { maDoiTac, tuNgay, denNgay } = req.query;
+
+        if (!maDoiTac || !tuNgay || !denNgay) {
+            return res.status(400).json({
+                message: 'Thiếu maDoiTac, tuNgay hoặc denNgay'
+            });
+        }
+
+        const data = await model.getChiTietCongNo({
+            maDoiTac,
+            tuNgay,
+            denNgay,
+        });
+
+        res.json(data);
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 module.exports = {
     createPhieu,
     deletePhieu,
@@ -119,4 +182,8 @@ module.exports = {
     getBaoCao,
     getByLoai,
     getThongKe,
+    getLoiNhuan,
+    getCongNo,
+    getChiTietCongNo,
+    getAll,
 };

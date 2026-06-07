@@ -4,10 +4,10 @@ const { sql } = require('../config/db');
    CONSTANTS
 ================================ */
 const LOAI = {
-    NHAP_VE:  1,
-    BAN_VE:   2,
-    TRA_VE:   3,
-    THU_VE:   4,
+    NHAP_VE: 1,
+    BAN_VE: 2,
+    TRA_VE: 3,
+    THU_VE: 4,
     THU_TIEN: 5,
     CHI_TIEN: 6,
 };
@@ -15,7 +15,7 @@ const LOAI = {
 // Loại phụ tương ứng khi có vé ế
 const LOAI_PHU = {
     [LOAI.NHAP_VE]: LOAI.TRA_VE,
-    [LOAI.BAN_VE]:  LOAI.THU_VE,
+    [LOAI.BAN_VE]: LOAI.THU_VE,
 };
 
 /* ================================
@@ -25,16 +25,16 @@ const createPhieu = async ({
     NgayGiao,
     MaDoiTac,
     Loai,
-    MaDot        = null,
-    SoLuong      = 0,
-    VeE          = 0,
-    DonGia       = 0,
+    MaDot = null,
+    SoLuong = 0,
+    VeE = 0,
+    DonGia = 0,
     TyLeThanhToan = 1,
-    TienTra      = 0,
-    MaHT         = null,
-    SoCT         = null,
-    GhiChu       = null,
-    UserTao      = null,
+    TienTra = 0,
+    MaHT = null,
+    SoCT = null,
+    GhiChu = null,
+    UserTao = null,
 }) => {
 
     const transaction = new sql.Transaction();
@@ -45,13 +45,13 @@ const createPhieu = async ({
 
         // ── 1. Insert Phieu ──────────────────────
         const r1 = new sql.Request(transaction);
-        r1.input('NgayGiao',  sql.Date,     NgayGiao);
-        r1.input('MaDoiTac',  sql.NVarChar, MaDoiTac);
-        r1.input('Loai',      sql.Int,      Loai);
-        r1.input('SoCT',      sql.NVarChar, SoCT);
-        r1.input('MaHT',      sql.NVarChar, MaHT);
-        r1.input('GhiChu',    sql.NVarChar, GhiChu);
-        r1.input('UserTao',   sql.NVarChar, UserTao);
+        r1.input('NgayGiao', sql.Date, NgayGiao);
+        r1.input('MaDoiTac', sql.NVarChar, MaDoiTac);
+        r1.input('Loai', sql.Int, Loai);
+        r1.input('SoCT', sql.NVarChar, SoCT);
+        r1.input('MaHT', sql.NVarChar, MaHT);
+        r1.input('GhiChu', sql.NVarChar, GhiChu);
+        r1.input('UserTao', sql.NVarChar, UserTao);
 
         const phieuResult = await r1.query(`
             INSERT INTO Phieu (
@@ -71,20 +71,20 @@ const createPhieu = async ({
         const insertSoCai = async (loaiDong, slDong, tienTraDong, thanhTienDong) => {
 
             const r = new sql.Request(transaction);
-            r.input('IDPhieu',        sql.BigInt,        IDPhieu);
-            r.input('NgayGiao',       sql.Date,          NgayGiao);
-            r.input('MaDot',          sql.NVarChar,      MaDot);
-            r.input('MaDoiTac',       sql.NVarChar,      MaDoiTac);
-            r.input('Loai',           sql.Int,           loaiDong);
-            r.input('SoLuong',        sql.Int,           slDong);
-            r.input('DonGia',         sql.Decimal(18,0), DonGia);
-            r.input('TienTra',        sql.Decimal(18,0), tienTraDong);
-            r.input('TyLeThanhToan',  sql.Decimal(18,2), TyLeThanhToan / 100);
-            r.input('ThanhTien',      sql.Decimal(18,0), thanhTienDong);
-            r.input('SoCT',           sql.NVarChar,      SoCT);
-            r.input('MaHT',           sql.NVarChar,      MaHT);
-            r.input('GhiChu',         sql.NVarChar,      GhiChu);
-            r.input('UserTao',        sql.NVarChar,      UserTao);
+            r.input('IDPhieu', sql.BigInt, IDPhieu);
+            r.input('NgayGiao', sql.Date, NgayGiao);
+            r.input('MaDot', sql.NVarChar, MaDot);
+            r.input('MaDoiTac', sql.NVarChar, MaDoiTac);
+            r.input('Loai', sql.Int, loaiDong);
+            r.input('SoLuong', sql.Int, slDong);
+            r.input('DonGia', sql.Decimal(18, 0), DonGia);
+            r.input('TienTra', sql.Decimal(18, 0), tienTraDong);
+            r.input('TyLeThanhToan', sql.Decimal(18, 2), TyLeThanhToan / 100);
+            r.input('ThanhTien', sql.Decimal(18, 0), thanhTienDong);
+            r.input('SoCT', sql.NVarChar, SoCT);
+            r.input('MaHT', sql.NVarChar, MaHT);
+            r.input('GhiChu', sql.NVarChar, GhiChu);
+            r.input('UserTao', sql.NVarChar, UserTao);
 
             await r.query(`
                 INSERT INTO SoCai (
@@ -101,18 +101,18 @@ const createPhieu = async ({
         };
 
         // ── 3. Tính & insert dòng chính ──────────
-        const isVe    = [LOAI.NHAP_VE, LOAI.BAN_VE, LOAI.TRA_VE, LOAI.THU_VE].includes(Loai);
-        const isTien  = [LOAI.THU_TIEN, LOAI.CHI_TIEN].includes(Loai);
+        const isVe = [LOAI.NHAP_VE, LOAI.BAN_VE, LOAI.TRA_VE, LOAI.THU_VE].includes(Loai);
+        const isTien = [LOAI.THU_TIEN, LOAI.CHI_TIEN].includes(Loai);
 
         if (isVe) {
-            const tienTra    = SoLuong * DonGia;
-            const thanhTien  = Math.round(tienTra * TyLeThanhToan / 100);
-            await insertSoCai(Loai, SoLuong, 0 ,thanhTien);
+            const tienTra = SoLuong * DonGia;
+            const thanhTien = Math.round(tienTra * TyLeThanhToan / 100);
+            await insertSoCai(Loai, SoLuong, 0, thanhTien);
 
             // ── 4. Dòng phụ vé ế (chỉ Nhập/Bán) ─
             const loaiPhu = LOAI_PHU[Loai];
             if (loaiPhu && VeE > 0) {
-                const tienTraVeE   = VeE * DonGia;
+                const tienTraVeE = VeE * DonGia;
                 const thanhTienVeE = Math.round(tienTraVeE * TyLeThanhToan / 100);
                 await insertSoCai(loaiPhu, VeE, tienTraVeE, thanhTienVeE);
             }
@@ -142,7 +142,7 @@ const deletePhieu = async (idPhieu, userSua) => {
         await transaction.begin();
 
         const r1 = new sql.Request(transaction);
-        r1.input('ID',      sql.BigInt,  idPhieu);
+        r1.input('ID', sql.BigInt, idPhieu);
         r1.input('UserSua', sql.NVarChar, userSua);
         await r1.query(`
             UPDATE Phieu
@@ -151,7 +151,7 @@ const deletePhieu = async (idPhieu, userSua) => {
         `);
 
         const r2 = new sql.Request(transaction);
-        r2.input('IDPhieu', sql.BigInt,  idPhieu);
+        r2.input('IDPhieu', sql.BigInt, idPhieu);
         r2.input('UserSua', sql.NVarChar, userSua);
         await r2.query(`
             UPDATE SoCai
@@ -221,8 +221,8 @@ const getThongKe = async (loai) => {
 
     // Loai 1 → dòng phụ Loai 3 | Loai 2 → dòng phụ Loai 4
     const loaiPhu = loai === LOAI.NHAP_VE ? LOAI.TRA_VE
-                  : loai === LOAI.BAN_VE  ? LOAI.THU_VE
-                  : null;
+        : loai === LOAI.BAN_VE ? LOAI.THU_VE
+            : null;
 
     r.input('LoaiPhu', sql.Int, loaiPhu);
 
@@ -342,6 +342,210 @@ const getBaoCaoByDoiTac = async ({ maDoiTac, tuNgay, denNgay }) => {
     return result.recordset;
 };
 
+const getLoiNhuan = async ({ tuNgay, denNgay } = {}) => {
+
+    const r = new sql.Request();
+
+    let where = `WHERE SC.Xoa = 0 AND SC.Loai IN (1, 2, 3, 4)`;
+
+    if (tuNgay) {
+        r.input('tuNgay', sql.Date, tuNgay);
+        where += ` AND SC.NgayGiao >= @tuNgay`;
+    }
+    if (denNgay) {
+        r.input('denNgay', sql.Date, denNgay);
+        where += ` AND SC.NgayGiao <= @denNgay`;
+    }
+
+    const result = await r.query(`
+        SELECT
+            DPH.MaKyXo,
+            MAX(DPH.NgayXo)                                         AS NgayXo,
+
+            -- Doanh thu bán
+            SUM(CASE WHEN SC.Loai = 2 THEN SC.ThanhTien ELSE 0 END)
+          - SUM(CASE WHEN SC.Loai = 4 THEN SC.ThanhTien ELSE 0 END) AS ThanhTienBan,
+
+            -- Vốn nhập
+            SUM(CASE WHEN SC.Loai = 1 THEN SC.ThanhTien ELSE 0 END)
+          - SUM(CASE WHEN SC.Loai = 3 THEN SC.ThanhTien ELSE 0 END) AS ThanhTienVon,
+
+            -- Lợi nhuận
+            (SUM(CASE WHEN SC.Loai = 2 THEN SC.ThanhTien ELSE 0 END)
+           - SUM(CASE WHEN SC.Loai = 4 THEN SC.ThanhTien ELSE 0 END))
+          - (SUM(CASE WHEN SC.Loai = 1 THEN SC.ThanhTien ELSE 0 END)
+           - SUM(CASE WHEN SC.Loai = 3 THEN SC.ThanhTien ELSE 0 END)) AS LoiNhuan
+
+        FROM SoCai SC
+        LEFT JOIN DotPhatHanh DPH ON DPH.MaDot = SC.MaDot
+        ${where}
+        GROUP BY DPH.MaKyXo
+        ORDER BY MAX(DPH.NgayXo) DESC
+    `);
+
+    return result.recordset;
+};
+
+
+const getAll = async () => {
+
+    const r = new sql.Request();
+    const result = await r.query(`
+        SELECT 
+            SC.*,
+            DT.TenDoiTac,
+            DPH.DienGiai AS TenDot
+
+        FROM SoCai SC
+
+        LEFT JOIN DoiTac DT ON DT.MaDoiTac = SC.MaDoiTac
+
+        LEFT JOIN DotPhatHanh DPH ON DPH.MaDot = SC.MaDot
+
+        WHERE SC.Xoa = 0
+        ORDER BY SC.NgayGiao DESC
+    `);
+    return result.recordset;
+};
+const getCongNo = async ({ tuNgay, denNgay, phanLoai, tinhTheo } = {}) => {
+
+    const r = new sql.Request();
+    r.input('tuNgay', sql.Date, tuNgay);
+    r.input('denNgay', sql.Date, denNgay);
+
+    // Nếu tính theo ngày xổ thì dùng DPH.NgayXo,
+    // nhưng Loai 5,6 không có MaDot → fallback về NgayGiao
+    const ngayField = tinhTheo === 'ngayXo'
+        ? `ISNULL(DPH.NgayXo, SC.NgayGiao)`
+        : `SC.NgayGiao`;
+
+    let wherePhanLoai = '';
+    if (phanLoai && phanLoai !== 'tatCa') {
+        r.input('PhanLoai', sql.NVarChar, phanLoai);
+        wherePhanLoai = `AND DT.PhanLoai = @PhanLoai`;
+    }
+
+    const result = await r.query(`
+        WITH TruocKy AS (
+            SELECT
+                SC.MaDoiTac,
+                SUM(CASE WHEN SC.Loai IN (1,2)     THEN SC.ThanhTien ELSE 0 END)
+              - SUM(CASE WHEN SC.Loai IN (3,4,5,6) THEN SC.ThanhTien ELSE 0 END)
+                AS SoTruocKy
+            FROM SoCai SC
+            LEFT JOIN DotPhatHanh DPH ON DPH.MaDot = SC.MaDot
+            WHERE SC.Xoa = 0
+              AND ${ngayField} < @tuNgay
+            GROUP BY SC.MaDoiTac
+        ),
+        TrongKy AS (
+            SELECT
+                SC.MaDoiTac,
+                SUM(CASE WHEN SC.Loai IN (1,2)     THEN SC.ThanhTien ELSE 0 END) AS PsNo,
+                SUM(CASE WHEN SC.Loai IN (3,4,5,6) THEN SC.ThanhTien ELSE 0 END) AS PsCo
+            FROM SoCai SC
+            LEFT JOIN DotPhatHanh DPH ON DPH.MaDot = SC.MaDot
+            WHERE SC.Xoa = 0
+              AND ${ngayField} >= @tuNgay
+              AND ${ngayField} <= @denNgay
+            GROUP BY SC.MaDoiTac
+        )
+        SELECT
+            DT.MaDoiTac,
+            DT.TenDoiTac,
+            DT.PhanLoai,
+            ISNULL(DT.NoDauKy, 0) + ISNULL(TK.SoTruocKy, 0)           AS DauKy,
+            ISNULL(TrongKy.PsNo, 0)                                      AS PsNo,
+            ISNULL(TrongKy.PsCo, 0)                                      AS PsCo,
+            ISNULL(DT.NoDauKy, 0) + ISNULL(TK.SoTruocKy, 0)
+          + ISNULL(TrongKy.PsNo, 0) - ISNULL(TrongKy.PsCo, 0)          AS CuoiKy
+        FROM DoiTac DT
+        LEFT JOIN TruocKy  TK    ON TK.MaDoiTac     = DT.MaDoiTac
+        LEFT JOIN TrongKy        ON TrongKy.MaDoiTac = DT.MaDoiTac
+        WHERE (
+            ISNULL(DT.NoDauKy, 0)       != 0 OR
+            ISNULL(TK.SoTruocKy, 0)     != 0 OR
+            ISNULL(TrongKy.PsNo, 0)     != 0 OR
+            ISNULL(TrongKy.PsCo, 0)     != 0
+        )
+        ${wherePhanLoai}
+        ORDER BY DT.PhanLoai, DT.TenDoiTac
+    `);
+
+    return result.recordset;
+};
+
+const getChiTietCongNo = async ({ maDoiTac, tuNgay, denNgay }) => {
+
+    const r = new sql.Request();
+    r.input('tuNgay', sql.Date, tuNgay);
+    r.input('denNgay', sql.Date, denNgay);
+
+    let whereDoiTac = '';
+    if (maDoiTac && maDoiTac !== 'tatCa') {
+        r.input('MaDoiTac', sql.NVarChar, maDoiTac);
+        whereDoiTac = `AND SC.MaDoiTac = @MaDoiTac`;
+    }
+
+    const result = await r.query(`
+        WITH NoCu AS (
+            SELECT
+                DT.MaDoiTac,
+                ISNULL(DT.NoDauKy, 0) + ISNULL((
+                    SELECT
+                        SUM(CASE WHEN SC2.Loai IN (1,2)     THEN SC2.ThanhTien ELSE 0 END)
+                      - SUM(CASE WHEN SC2.Loai IN (3,4,5,6) THEN SC2.ThanhTien ELSE 0 END)
+                    FROM SoCai SC2
+                    WHERE SC2.MaDoiTac = DT.MaDoiTac
+                      AND SC2.Xoa     = 0
+                      AND SC2.NgayGiao < @tuNgay
+                ), 0) AS NoCu
+            FROM DoiTac DT
+        )
+        SELECT
+            SC.ID                                               AS IDSoCai,
+            SC.IDPhieu,
+            SC.SoCT,
+            SC.NgayGiao,
+            DPH.NgayXo,
+            SC.MaDot,
+            SC.MaDoiTac,
+            DT.TenDoiTac,
+            ISNULL(DPH.DienGiai, SC.GhiChu)                    AS DienGiai,
+            SC.SoLuong                                          AS SoCap,
+            SC.DonGia                                           AS MenhGia,
+            SC.TienTra                                          AS GiaTri,
+            ISNULL(SC_phu.SoLuong, 0)                          AS VeE,
+            SC.SoLuong - ISNULL(SC_phu.SoLuong, 0)            AS ThucTinh,
+            SC.TyLeThanhToan                                    AS DonGia,
+            CASE
+                WHEN SC.Loai IN (1,2) THEN -SC.ThanhTien
+                ELSE SC.ThanhTien
+            END                                                 AS ThanhTien,
+            SC.Loai,
+            NC.NoCu
+        FROM SoCai SC
+        JOIN DoiTac DT
+            ON DT.MaDoiTac  = SC.MaDoiTac
+        LEFT JOIN DotPhatHanh DPH
+            ON DPH.MaDot    = SC.MaDot
+        LEFT JOIN SoCai SC_phu
+            ON  SC_phu.IDPhieu  = SC.IDPhieu
+            AND SC_phu.Loai     IN (3,4)
+            AND SC_phu.Xoa      = 0
+        LEFT JOIN NoCu NC
+            ON NC.MaDoiTac  = SC.MaDoiTac
+        WHERE SC.Xoa        = 0
+          AND SC.Loai       NOT IN (3,4)
+          AND SC.NgayGiao   >= @tuNgay
+          AND SC.NgayGiao   <= @denNgay
+          ${whereDoiTac}
+        ORDER BY SC.NgayGiao ASC, SC.ID ASC
+    `);
+
+    return result.recordset;
+};
+
 module.exports = {
     LOAI,
     createPhieu,
@@ -350,4 +554,8 @@ module.exports = {
     getBaoCaoByDoiTac,
     getByLoai,
     getThongKe,
+    getLoiNhuan,
+    getAll,
+    getCongNo,
+    getChiTietCongNo,
 };
