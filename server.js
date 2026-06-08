@@ -24,7 +24,7 @@ app.use('/api/capve', capVeRoute);
 app.use('/api/phieu', phieuRoute);
 app.use('/api/socai', socaiRoute);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 connectDB();
 
